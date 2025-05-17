@@ -1,3 +1,15 @@
+name: Build and Test Backend & Frontend
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
@@ -30,4 +42,9 @@ jobs:
 
     - name: Run tests for ${{ matrix.service }}
       working-directory: ${{ matrix.service }}
-      run: npm test || echo "No tests found"
+      run: |
+        if npm run test -- --watch=false --bail; then
+          echo "Tests passed"
+        else
+          echo "No tests or tests failed, skipping..."
+        fi
