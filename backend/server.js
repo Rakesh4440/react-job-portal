@@ -1,37 +1,23 @@
-import express from 'express';
-import cors from 'cors';
-import cloudinary from 'cloudinary';
-import app from './app.js'; // Ensure this imports your Express app
+const express = require('express');
+const path = require('path');
 
-// Configure Cloudinary
-cloudinary.v2.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
+const app = express();
+const port = 4000;
+
+// API route example - root route
+app.get('/', (req, res) => {
+  res.send('Backend is working!');
 });
 
-// Define allowed origins
-const allowedOrigins = ['https://your-frontend.vercel.app']; // Replace with your actual frontend URL
+// Serve static files from the React frontend build folder
+app.use(express.static(path.join(__dirname, 'frontend/build')));
 
-// CORS options
-const corsOptions = {
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-      return callback(new Error(msg), false);
-    }
-    return callback(null, true);
-  },
-  credentials: true, // Allow cookies and credentials
-};
+// Handles any other routes and serves React's index.html (for React Router)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'));
+});
 
-// Use CORS middleware
-app.use(cors(corsOptions));
-
-// Start the server
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => {
-  console.log(`Server running at port ${PORT}`);
+// Start server
+app.listen(port, () => {
+  console.log(`Server running at port ${port}`);
 });
