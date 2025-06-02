@@ -1,12 +1,26 @@
-import app from "./app.js";
-import cloudinary from "cloudinary";
+import express from 'express';
+import cloudinary from 'cloudinary';
+import dotenv from 'dotenv';
 
+dotenv.config();
+
+const app = express();
+
+// Cloudinary configuration
 cloudinary.v2.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME, // CLOUDINARY_CLIENT_NAME
-  api_key: process.env.CLOUDINARY_API_KEY,       // CLOUDINARY_CLIENT_API
-  api_secret: process.env.CLOUDINARY_API_SECRET, // CLOUDINARY_CLIENT_SECRET
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server running at port ${process.env.PORT}`);
+// Root route
+app.get('/', (req, res) => {
+  res.send('Backend is running');
+});
+
+// Your other routes and middleware
+
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
+  console.log(`Server running at port ${PORT}`);
 });
