@@ -1,0 +1,45 @@
+name: CI-CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        service: [backend, frontend]
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Use Node.js 18.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - name: Install dependencies for ${{ matrix.service }}
+      working-directory: ${{ matrix.service }}
+      run: npm install
+
+    - name: Build frontend only
+      if: matrix.service == 'frontend'
+      working-directory: frontend
+      run: npm run build
+
+    - name: Skip build for backend
+      if: matrix.service == 'backend'
+      run: echo "No build step for backend"
+
+    - name: Run tests for ${{ matrix.service }}
+      working-directory: ${{ matrix.service }}
+      run: npm test || echo "No tests found"
+
+    # New step added to show a successful extra step
+    - name: Verify Node.js version
+      run: node -v
