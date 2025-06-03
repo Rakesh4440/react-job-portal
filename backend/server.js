@@ -14,6 +14,10 @@ app.use(
   })
 );
 
+app.get('/', (req, res) => {
+  res.send('Backend is running');
+});
+
 // ✅ (Optional) Preflight support for all routes
 app.options("*", cors());
 
