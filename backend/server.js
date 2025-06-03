@@ -1,16 +1,23 @@
+// Import required modules
 import app from "./app.js";
 import cloudinary from "cloudinary";
-import cors from "cors"; // ✅ import cors
+import cors from "cors";
 
-// ✅ Allow frontend from Vercel to access backend
-const FRONTEND_URL = "https://react-job-portal-kyy6.vercel.app"; // 🔁 Replace this with your actual Vercel domain
+// ✅ CORS Configuration - Allow frontend from Vercel
+const FRONTEND_URL = "https://react-job-portal-kyy6.vercel.app"; // 🔁 Replace if your Vercel domain changes
 
-app.use(cors({
-  origin: "https://react-job-portal-kyy6.vercel.app",
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: FRONTEND_URL,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 
-// ✅ Configure Cloudinary
+// ✅ (Optional) Preflight support for all routes
+app.options("*", cors());
+
+// ✅ Cloudinary Configuration
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -19,4 +26,6 @@ cloudinary.config({
 
 // ✅ Start the server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});
