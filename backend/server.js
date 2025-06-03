@@ -3,7 +3,7 @@ import cloudinary from "cloudinary";
 import cors from "cors"; // ✅ import cors
 
 // ✅ Allow frontend from Vercel to access backend
-const FRONTEND_URL = "https://your-frontend-name.vercel.app"; // 🔁 Replace this with your actual Vercel domain
+const FRONTEND_URL = "https://react-job-portal-kyy6.vercel.app"; // 🔁 Replace this with your actual Vercel domain
 
 app.use(cors({
   origin: "https://react-job-portal-kyy6.vercel.app",
