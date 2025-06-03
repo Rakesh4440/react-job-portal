@@ -1,23 +1,13 @@
-const express = require('express');
-const path = require('path');
+import app from "./app.js";
+import cloudinary from "cloudinary";
 
-const app = express();
-const port = 4000;
-
-// API route example - root route
-app.get('/', (req, res) => {
-  res.send('Backend is working!');
+cloudinary.v2.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME, // CLOUDINARY_CLIENT_NAME
+  api_key: process.env.CLOUDINARY_API_KEY,       // CLOUDINARY_CLIENT_API
+  api_secret: process.env.CLOUDINARY_API_SECRET, // CLOUDINARY_CLIENT_SECRET
 });
 
-// Serve static files from the React frontend build folder
-app.use(express.static(path.join(__dirname, 'frontend/build')));
 
-// Handles any other routes and serves React's index.html (for React Router)
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'));
-});
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => console.log(`Server running on ${PORT}`));
 
-// Start server
-app.listen(port, () => {
-  console.log(`Server running at port ${port}`);
-});
