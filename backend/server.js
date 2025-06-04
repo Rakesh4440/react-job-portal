@@ -9,7 +9,7 @@ const FRONTEND_URL = "https://react-job-portal-j7iw.vercel.app"; // Your specifi
 app.use(
   cors({
     origin: FRONTEND_URL, // Keep it specific to your frontend URL
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Ensure OPTIONS is present
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"], // Ensure OPTIONS is present
     allowedHeaders: ["Content-Type", "Authorization"], // ESSENTIAL: Add Content-Type. Add Authorization if used.
     credentials: true,
   })
