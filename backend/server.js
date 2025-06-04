@@ -4,7 +4,7 @@ import cloudinary from "cloudinary";
 import cors from "cors";
 
 // ✅ CORS Configuration - Allow frontend from Vercel
-const FRONTEND_URL = "https://react-job-portal-kyy6.vercel.app"; // 🔁 Replace if your Vercel domain changes
+const FRONTEND_URL = "https://react-job-portal-j7iw.vercel.app/"; // 🔁 Replace if your Vercel domain changes
 
 app.use(
   cors({
